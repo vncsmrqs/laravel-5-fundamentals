@@ -39,7 +39,7 @@ class ArticlesController extends Controller
     public function store(CreateArticleRequest $request)
     {
         $this->createArticle($request);
-        
+
         // session()->flash('flash_message', 'Your article has been added!');
         // session()->flash('flash_message_important', true);
 
@@ -72,6 +72,7 @@ class ArticlesController extends Controller
 
     private function createArticle(CreateArticleRequest $request)
     {
+        dd($request->input('tag_list'));
         $article = Auth::user()->articles()->create($request->all());
 
         $this->syncTags($article, ($request->input('tag_list')));
