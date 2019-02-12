@@ -49,5 +49,9 @@ class Article extends Model
     {
         return $this->belongsToMany('App\Tag');
     }
-
+    //Mutator
+    public function getTagListAttribute()
+    {
+        return $this->tags->lists('id')->toArray();
+    }
 }

@@ -9,6 +9,7 @@ use App\Article;
 use Carbon\Carbon;
 use App\Http\Requests\CreateArticleRequest;
 use Illuminate\Support\Facades\Auth;
+use App\Tag;
 
 class ArticlesController extends Controller
 {
@@ -31,12 +32,15 @@ class ArticlesController extends Controller
 
     public function create()
     {
-        return view('articles.create');
+        $tags = Tag::lists('name', 'id');
+        return view('articles.create', compact('tags'));
     }
 
     public function store(CreateArticleRequest $request)
     {
-        Auth::user()->articles()->create($request->all());
+        $article = Auth::user()->articles()->create($request->all());
+
+        $article->tags()->attach($request->input('tag_list'));
 
         // session()->flash('flash_message', 'Your article has been added!');
         // session()->flash('flash_message_important', true);
@@ -49,7 +53,9 @@ class ArticlesController extends Controller
 
     public function edit(Article $article)
     {
-        return view('articles.edit', compact('article'));
+        $tags = Tag::lists('name', 'id');
+
+        return view('articles.edit', compact('article', 'tags'));
     }
 
     public function update(Article $article, Request $request)
