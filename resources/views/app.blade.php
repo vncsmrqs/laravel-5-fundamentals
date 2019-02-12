@@ -9,6 +9,8 @@
     <link href="/css/all.css" rel="stylesheet" />
 </head>
 <body>
+    @include('partials.nav')
+    
     <div class="container">
         @include('partials.flash')
 
