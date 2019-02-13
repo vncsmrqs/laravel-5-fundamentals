@@ -36,3 +36,5 @@ Route::get('foo', ['middleware' => 'manager', function ()
 {
     return "Great! You are a manager";
 }]);
+
+Route::get('tags/{tags}', 'TagsController@show');
